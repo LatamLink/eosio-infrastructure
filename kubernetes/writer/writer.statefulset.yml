@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: writer
+  labels:
+    version: ${VERSION}
+spec:
+  serviceName: writer
+  replicas: 1
+  selector:
+    matchLabels:
+      app: writer
+      version: ${VERSION}
+  template:
+    metadata:
+      labels:
+        app: writer
+        version: ${VERSION}
+    spec:
+      containers:
+        - name: nodeos
+          image: ${DOCKER_REGISTRY}/${IMAGE_NAME}:${EOSIO_VERSION}
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: lacchain-secrets
+          env:
+            - name: DATA_DIR
+              value: /data/nodeos
+            - name: CONFIG_DIR
+              value: /data/nodeos/config
+          ports:
+            - name: p2p
+              protocol: TCP
+              containerPort: 9876
+            - name: http
+              protocol: TCP
+              containerPort: 80
+          volumeMounts:
+            - name: data-directory
+              mountPath: /data/nodeos
+            - name: genesis
+              mountPath: /opt/genesis
+            - name: scripts
+              mountPath: /opt/scripts
+      volumes:
+        - name: scripts
+          configMap:
+            name: writer-config
+            defaultMode: 0755
+        - name: genesis
+          configMap:
+            name: genesis-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data-directory
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: lacchain
+        resources:
+          requests:
+            storage: 100Gi

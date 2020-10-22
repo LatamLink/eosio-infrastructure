@@ -1,0 +1,45 @@
+{
+  "schedule": [
+  {
+    "producer_name": "validator1",
+    "authority": [
+      "block_signing_authority_v0",
+      {
+        "threshold": 1,
+        "keys": [
+        {
+          "key": "EOS5qjio34Fwpo4mNztYaG6LE5p6uTvKV1fU36ZG75N2pYVsoPcQX",
+          "weight": 1
+        }]
+      }
+    ]
+  },
+  {
+    "producer_name": "validator2",
+    "authority": [
+      "block_signing_authority_v0",
+      {
+        "threshold": 1,
+        "keys": [
+        {
+          "key": "EOS5qjio34Fwpo4mNztYaG6LE5p6uTvKV1fU36ZG75N2pYVsoPcQX",
+          "weight": 1
+        }]
+      }
+    ]
+  },
+  {
+    "producer_name": "validator3",
+    "authority": [
+      "block_signing_authority_v0",
+      {
+        "threshold": 1,
+        "keys": [
+        {
+          "key": "EOS5qjio34Fwpo4mNztYaG6LE5p6uTvKV1fU36ZG75N2pYVsoPcQX",
+          "weight": 1
+        }]
+      }
+    ]
+  }]
+}
