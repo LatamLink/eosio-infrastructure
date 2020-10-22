@@ -1,5 +1,5 @@
 -include .env
-
+VERSION ?= $(shell git ls-files -s ./ configs | git hash-object --stdin)
 IMAGE_NAME=eosio-nodeos
 CDT_IMAGE_NAME=eosio-cdt-nodeos
 DOCKER_REGISTRY=eoscostarica506
