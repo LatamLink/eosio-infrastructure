@@ -1,0 +1,167 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: ingressroutep2p
+  namespace: lacchain-testnet
+spec:
+  entryPoints:
+    - p2p
+  routes:
+  - kind: Rule
+    match: HostSNI(`*`) 
+    services:
+    - kind: Service
+      name: p2p
+      namespace: lacchain-testnet
+      port: 9870
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-configmap
+  namespace: lacchain-testnet
+data:
+  genesis.json: |
+    {
+      "initial_timestamp": "2020-09-27T12:00:00.000",
+      "initial_key": "EOS7VG9vG8BMTJugbLprCXvwqztbH1seYmoGLC2yrfVfurVE4ACCy",
+      "initial_configuration": {
+        "max_block_net_usage": 1048576,
+        "target_block_net_usage_pct": 1000,
+        "max_transaction_net_usage": 524288,
+        "base_per_transaction_net_usage": 12,
+        "net_usage_leeway": 500,
+        "context_free_discount_net_usage_num": 20,
+        "context_free_discount_net_usage_den": 100,
+        "max_block_cpu_usage": 200000,
+        "target_block_cpu_usage_pct": 1000,
+        "max_transaction_cpu_usage": 50000,
+        "min_transaction_cpu_usage": 100,
+        "max_transaction_lifetime": 3600,
+        "deferred_trx_expiration_window": 600,
+        "max_transaction_delay": 3888000,
+        "max_inline_action_size": 4096,
+        "max_inline_action_depth": 4,
+        "max_authority_depth": 6
+      }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: p2p
+  namespace: lacchain-testnet
+  labels:
+    app: nodeos-boot
+spec:
+  ports:
+    - port: 9870
+      name: p2p
+  selector:
+    app: nodeos-boot
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeos-boot
+  namespace: lacchain-testnet
+  labels:
+    app: nodeos-boot
+spec:
+  clusterIP: None
+  selector:
+    app: nodeos-boot
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nodeos-boot
+  namespace: lacchain-testnet
+  labels:
+    app: nodeos-boot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodeos-boot
+  serviceName: nodeos-boot
+  template:
+    metadata:
+      labels:
+        app: nodeos-boot
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: "app"
+                  operator: In
+                  values:
+                  - nodeos-boot
+            topologyKey: "kubernetes.io/hostname"
+      terminationGracePeriodSeconds: 600
+      containers:
+      - image: "${YOUR_REGISTRY}/eosio:v2.0.7-wt-0.0.2"
+        name: nodeos-boot
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -ec
+          - |
+            rm -rf /eos.data/* && service nginx start && nodeos \
+            --data-dir=/eos.data \
+            --genesis-json=/eos.config/genesis.json \
+            --agent-name=AgentName \
+            --plugin=eosio::chain_plugin \
+            --p2p-listen-endpoint=0.0.0.0:9870 \
+            --p2p-server-address=${your_domain} \
+            --p2p-peer-address=95.216.6.97:9878 \
+            --p2p-peer-address=latamlink.eosio.cr:9876 \
+            --p2p-peer-address=boot.testnet.latamlin.io:9878 \
+            --chain-threads=8 \
+            --chain-state-db-guard-size-mb=128 \
+            --reversible-blocks-db-guard-size-mb=2 \
+            --max-irreversible-block-age=-1 \
+            --txn-reference-block-lag=0 \
+            --connection-cleanup-period=30 \
+            --sync-fetch-span=2000 \
+            --chain-state-db-size-mb=8096 \
+            --reversible-blocks-db-size-mb=512 \
+            --max-clients=150 \
+            --http-validate-host=false \
+            --force-all-checks \
+            --disable-replay-opts \
+            --max-transaction-time=30000 \
+            --abi-serializer-max-time-ms=15000 \
+            --contracts-console \
+        ports:
+          - containerPort: 9870
+            protocol: TCP
+            name: p2p
+        readinessProbe:
+          exec:
+            command:
+            - /tools/ready.sh
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+          - name: nodeos-data
+            mountPath: /eos.data
+          - name: nodeos-config
+            mountPath: /eos.config
+      volumes:
+        - name: nodeos-config
+          configMap:
+            name: data-configmap
+  volumeClaimTemplates:
+    - metadata:
+        name: nodeos-data
+        labels:
+          app: nodeos-boot
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: rook-ceph-block-x2
+        resources:
+          requests:
+            storage: "32Gi"
