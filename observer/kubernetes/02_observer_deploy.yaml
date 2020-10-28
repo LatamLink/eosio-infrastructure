@@ -111,32 +111,34 @@ spec:
           - |
             rm -rf /eos.data/* && service nginx start && nodeos \
             --data-dir=/eos.data \
-			--p2p-server-address={your_url_address}:9876 \
-			--agent-name=boot \
-			--plugin=eosio::chain_plugin \
-			--plugin=eosio::net_plugin \
-			--contracts-console=false \
-			--abi-serializer-max-time-ms=2000 \
-			--wasm-runtime=eos-vm-jit \
-			--eos-vm-oc-enable=false \
-			--enable-stale-production=true \
-			--pause-on-startup=false \
-			--max-irreversible-block-age=-1 \
-			--txn-reference-block-lag=0 \
-			--chain-state-db-size-mb=32768 \
-			--chain-threads=4 \
-			--p2p-listen-endpoint=95.216.6.97:9878 \
-			--p2p-max-nodes-per-host=5 \
-			--max-clients=150 \
-			--connection-cleanup-period=30 \
-			--sync-fetch-span=1000 \
-			--allowed-connection=specified \
-			--peer-private-key=["<pub_key>","<private_key>"] \
-			--peer-key="peer-key" \
-			--peer-key="peer-key" \
-			--peer-key="peer-key" \
-			--p2p-peer-address=boot.testnet.latamlink.io:9876 \
-			--p2p-peer-address=latamlink.eosio.cr:9876 
+            --p2p-server-address={your_url_address}:9876 \
+            --agent-name=observer \
+            --plugin=eosio::chain_api_plugin \
+            --contracts-console=false \
+            --abi-serializer-max-time-ms=2000 \
+            --wasm-runtime=eos-vm-jit \
+            --eos-vm-oc-enable=true \
+            --enable-stale-production=true \
+            --pause-on-startup=false \
+            --max-irreversible-block-age=-1 \
+            --txn-reference-block-lag=0 \
+            --chain-state-db-size-mb=32768 \
+            --chain-threads=4 \
+            --http-threads=4 \
+            --http-server-address=127.0.0.1:8888 \
+            --access-control-allow-origin=* \
+            --access-control-allow-headers=Origin,X-Requested-With,Content-Type,Accept \
+            --p2p-listen-endpoint=95.216.6.97:9878 \
+            --p2p-max-nodes-per-host=5 \
+            --max-clients=150 \
+            --connection-cleanup-period=30 \
+            --sync-fetch-span=1000 \
+            --allowed-connection=any \
+            --peer-private-key=["<pub_key>","<private_key>"] \
+            --p2p-peer-address=boot.testnet.latamlink.io:9876 \
+            --p2p-peer-address=latamlink.eosio.cr:9876 \
+            --p2p-accept-transactions=false \
+            --api-accept-transactions=false 
 
         ports:
           - containerPort: 9870
