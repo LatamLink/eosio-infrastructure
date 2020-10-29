@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  node:
+    build: .
+    command: nodeos --data-dir /mnt/data --config-dir /mnt/config
+    hostname: node
+    container_name: boot_node
+    ports:
+      - "9876:9876"
+      - "8888:8888" 
+    volumes:
+      - ./data:/mnt/data
+      - ./config:/mnt/config
+
