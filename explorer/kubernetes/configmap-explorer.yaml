@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: explorer-fill-config
+data:
+  NODE_ENDPOINT_DOMAIN_NAME: lacchain.eosio.cr
+  SHIP_PLUGIN_PORT: "8080"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: explorer-postgres-config
+data:
+  POSTGRES_VOLUME_NAME: explorer-postgres
+  POSTGRES_CONTAINER_NAME: explorer-postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: eosio_postgres_password
+  POSTGRES_HOST: explorer-postgres
+  POSTGRES_DATABASE: postgres
+  POSTGRES_PORT: "5431"

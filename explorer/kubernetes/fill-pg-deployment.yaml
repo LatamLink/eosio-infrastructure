@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fill-pg
+  name: fill-pg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fill-pg
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: fill-pg
+    spec:
+      imagePullSecrets:
+          - name: regcred
+      containers:
+      - image: eosio/eosio-explorer:fill-pg-1.3
+        imagePullPolicy: "Always"
+        name: fill-pg
+        command: ["./start_history_tool.sh"]
+        envFrom:
+        - configMapRef:
+            name: explorer-fill-config
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: "config"
+          mountPath: "/root/history-tools/config.file"
+          subPath: "config.file"
+      restartPolicy: Always
+      volumes:
+        - name: "config"
+          configMap:
+            name: "config"

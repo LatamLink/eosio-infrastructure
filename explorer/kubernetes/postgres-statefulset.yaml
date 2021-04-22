@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: explorer-postgres
+  name: explorer-postgres
+spec:
+  serviceName: explorer-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: explorer-postgres
+  template:
+    metadata:
+      labels:
+        app: explorer-postgres
+    spec:
+      imagePullSecrets:
+          - name: regcred
+      containers:
+      - image: postgres:12
+        imagePullPolicy: "Always"
+        name: explorer-postgres
+        envFrom:
+        - configMapRef:
+            name: explorer-postgres-config
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres
+          subPath: postgres
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: dashboard-storage
+        resources:
+          requests:
+            storage: 100Gi 
