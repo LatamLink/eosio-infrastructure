@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: eosio-explorer
+  name: eosio-explorer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eosio-explorer
+  template:
+    metadata:
+      labels:
+        app: eosio-explorer
+    spec:
+      imagePullSecrets:
+          - name: regcred
+      containers:
+      - image: eoscostarica506/eosio-explorer:latest
+        imagePullPolicy: "Always"
+        name: eosio-explorer
+        envFrom:
+        - configMapRef:
+            name: eosio-explorer-config
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
