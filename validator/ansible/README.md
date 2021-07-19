@@ -27,17 +27,12 @@ python3 nodesuite_cli.py setup
 ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/eos.yml -e "target=dev" -e "testnet_name=''"
 ```
 
-* Adjust the following files according to your needs:
-
-```bash
-sudo nano config.ini
-sudo nano genesis.json
-```
-
-* Login to your node and start nodeos:
+* Login to your node, adjust the following files according to your needs and start nodeos:
 
 ```bash
 cd /opt/eosio/deploy/
+sudo nano config.ini
+sudo nano genesis.json
 sudo nodeos --delete-all-blocks --genesis-json genesis.json --disable-replay-opts --config-dir ./ --data-dir data/
 ```
 
