@@ -13,7 +13,9 @@ cd nodesuite
 
 * Create a firt set up environment:
 
-```python3 nodesuite_cli.py setup```
+```bash
+python3 nodesuite_cli.py setup
+```
 
 * Select EOS, dev, and No.
 
@@ -21,12 +23,16 @@ cd nodesuite
 
 * Run the Ansible playbooks to install the required dependencies.
 
-```ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/eos.yml -e "target=dev" -e "testnet_name=''""```
+```bash
+ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/eos.yml -e "target=dev" -e "testnet_name=''""
+```
 
 * Adjust the following files according to your needs:
 
-```sudo nano config.ini```
-```sudo nano genesis.json```
+```bash
+sudo nano config.ini
+sudo nano genesis.json
+```
 
 * Login to your node and start nodeos:
 
