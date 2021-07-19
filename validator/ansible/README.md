@@ -24,7 +24,7 @@ python3 nodesuite_cli.py setup
 * Run the Ansible playbooks to install the required dependencies.
 
 ```bash
-ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/eos.yml -e "target=dev" -e "testnet_name=''""
+ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/eos.yml -e "target=dev" -e "testnet_name=''"
 ```
 
 * Adjust the following files according to your needs:
