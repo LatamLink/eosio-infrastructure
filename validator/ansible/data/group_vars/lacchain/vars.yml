@@ -1,0 +1,6 @@
+---
+name: lacchain
+token_symbol: None
+snapshot_base_url: https://snapshots.eossweden.org/snapshots/aca376/1.8
+snapshot_file: snapshot-73243379.bin
+snapshot_provider: nodetools

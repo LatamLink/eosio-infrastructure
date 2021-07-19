@@ -1,0 +1,18 @@
+---
+chain_id: 5821525c6588037e2b066b992fcac34909a5b7f1ea8d5a393f6720fca3750d61
+peers:
+ - # Argentina Validator
+ - p2p-peer-address = val1.testnet.lacchain.eosargentina.io:9870
+ - peer-key = "EOS6fy29czCgooxnzWDD2yzZDEN8FjW9Egbb9eUTiwy1vnLbdeHDN"
+ - # IADB Validator
+ - peer-key = "EOS5kgACYpGMKgz88ugo5JFREvPtMH22Hh9biKWPxzwb8bsM2oSGw"
+ - # IADB BOOT
+ - p2p-peer-address = 35.185.102.125:9876
+ - peer-key = "EOS7Lvf76XgjhaLQs64u6AoVPoYaGAccGU2p5UTtjmxcvFya7bQHT"
+ - # EOS DETROIT
+ - p2p-peer-address = p2p.latamlink.eosdetroit.io:1337
+ - peer-key = "PUB_K1_549anzEsFTozY5vabRCkT9BNeCpmvsr3bkeEP8gnXZ4N5aB9t4"
+snapshot_base_url: http://backup.cryptolions.io/Jungle/snapshots
+snapshot_file: latest-snapshot.bin
+snapshot_provider: cryptolions
+private_signing_key: '{{ vault_private_signing_key }}'

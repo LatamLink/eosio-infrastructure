@@ -1,0 +1,11 @@
+# Argentina Validator
+p2p-peer-address = val1.testnet.lacchain.eosargentina.io:9870
+peer-key = "EOS6fy29czCgooxnzWDD2yzZDEN8FjW9Egbb9eUTiwy1vnLbdeHDN"
+# IADB Validator
+peer-key = "EOS5kgACYpGMKgz88ugo5JFREvPtMH22Hh9biKWPxzwb8bsM2oSGw"
+# IADB BOOT
+p2p-peer-address = 35.185.102.125:9876
+peer-key = "EOS7Lvf76XgjhaLQs64u6AoVPoYaGAccGU2p5UTtjmxcvFya7bQHT"
+# EOS DETROIT
+p2p-peer-address = p2p.latamlink.eosdetroit.io:1337
+peer-key = "PUB_K1_549anzEsFTozY5vabRCkT9BNeCpmvsr3bkeEP8gnXZ4N5aB9t4"
