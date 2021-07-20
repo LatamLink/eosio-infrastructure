@@ -11,7 +11,7 @@ git clone https://github.com/eosdetroit/nodesuite
 cd nodesuite
 ```
 
-* Create a firt set up environment:
+* Create a first set up environment:
 
 ```bash
 python3 nodesuite_cli.py setup

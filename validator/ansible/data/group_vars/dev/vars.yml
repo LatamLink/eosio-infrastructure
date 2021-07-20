@@ -1,0 +1,4 @@
+---
+stage: dev
+chain_state_db_size_mb: 8192
+jvm_heap_size: 4g
