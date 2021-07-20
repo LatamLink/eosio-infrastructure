@@ -66,10 +66,15 @@ In the current EOSIO-infrastructure directory:
 ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/lacchain.yml -e "target=dev" -e "testnet_name=''"
 ```
 
-* Login to your node, check that `config.ini` is configured according to your needs and start nodeos:
+* Login to your node, check that `config.ini` is configured according to your needs:
 
 ```bash
 cd /opt/eosio/deploy/
 sudo nano config.ini
+```
+
+* If `nodeos` is not already running, start it:
+
+```bash
 sudo nodeos --delete-all-blocks --genesis-json genesis.json --disable-replay-opts --config-dir ./ --data-dir data/
 ```
