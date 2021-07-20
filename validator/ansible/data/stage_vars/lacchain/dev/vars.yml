@@ -12,3 +12,5 @@ peer_keys:
  - "EOS7Lvf76XgjhaLQs64u6AoVPoYaGAccGU2p5UTtjmxcvFya7bQHT"
  - "PUB_K1_549anzEsFTozY5vabRCkT9BNeCpmvsr3bkeEP8gnXZ4N5aB9t4"
 private_signing_key: '{{ vault_private_signing_key }}'
+peer_pubkey: None
+peer_privkey: None
