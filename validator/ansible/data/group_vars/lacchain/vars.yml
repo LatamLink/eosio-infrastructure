@@ -3,7 +3,7 @@ token_symbol: None
 snapshot_base_url: None
 snapshot_file: None
 snapshot_provider: nodetools
-agent_name: cr.validator
+agent_name: validator
 plugin: eosio::chain_plugin
 plugin: eosio::producer_plugin
 max_transaction_time: 200
