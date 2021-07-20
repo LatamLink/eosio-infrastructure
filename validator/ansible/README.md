@@ -54,6 +54,8 @@ cd nodesuite
 ./custom-nodesuite.sh <NODESUITE_PATH>
 ```
 
+* Modify `data/inventories/lacchain.yml` with your node's IP address, ssh key, user, and API URL.
+
 * Run the Ansible playbooks to install the required dependencies.
 
 ```bash
