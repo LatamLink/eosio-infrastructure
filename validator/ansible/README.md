@@ -38,4 +38,32 @@ sudo nodeos --delete-all-blocks --genesis-json genesis.json --disable-replay-opt
 
 ## Automatically generating the config files:
 
-* In progress....
+All the configuration files necessary for the set up of a LACChain node can be found under `data` directory.
+Please follow the next steps to proceed with the installation:
+
+* Clone the EOS Detroit's Ansible scripts (do it in a separated directory from the current one):
+
+```bash
+git clone https://github.com/eosdetroit/nodesuite
+cd nodesuite
+```
+
+* Copy all the required configuration files to the nodesuite directory:
+
+```bash
+./custom-nodesuite.sh <NODESUITE_PATH>
+```
+
+* Run the Ansible playbooks to install the required dependencies.
+
+```bash
+ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/eos.yml -e "target=dev" -e "testnet_name=''"
+```
+
+* Login to your node, check that `config.ini` is configured according to your needs and start nodeos:
+
+```bash
+cd /opt/eosio/deploy/
+sudo nano config.ini
+sudo nodeos --delete-all-blocks --genesis-json genesis.json --disable-replay-opts --config-dir ./ --data-dir data/
+```
