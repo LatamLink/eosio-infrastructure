@@ -8,6 +8,7 @@ fi
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 cd ${1}
+python3 nodesuite_cli.py reset
 mkdir -p ./roles/deploy_node/files/lacchain/dev/
 
 cd $SCRIPT_DIR
