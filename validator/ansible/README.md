@@ -48,15 +48,17 @@ git clone https://github.com/eosdetroit/nodesuite
 cd nodesuite
 ```
 
+In the current EOSIO-infrastructure directory:
+
+* Edit `data/inventories/lacchain.yml` with your node's IP address, ssh key, user, and API URL.
+
+* In `data/stage_vars/lacchain/dev/vars.yml` modify `peer_pubkey` and `peer_privkey` with your peer keys.
+
 * Copy all the required configuration files to the nodesuite directory:
 
 ```bash
 ./custom-nodesuite.sh <NODESUITE_PATH>
 ```
-
-* Edit `data/inventories/lacchain.yml` with your node's IP address, ssh key, user, and API URL.
-
-* In `data/stage_vars/lacchain/dev/vars.yml` modify `peer_pubkey` and `peer_privkey` with your peer keys.
 
 * Run the Ansible playbooks to install the required dependencies.
 
