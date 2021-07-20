@@ -59,7 +59,7 @@ cd nodesuite
 * Run the Ansible playbooks to install the required dependencies.
 
 ```bash
-ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/eos.yml -e "target=dev" -e "testnet_name=''"
+ansible-playbook -v initialize-eosio-genesis-node.yml -i inventories/lacchain.yml -e "target=dev" -e "testnet_name=''"
 ```
 
 * Login to your node, check that `config.ini` is configured according to your needs and start nodeos:
