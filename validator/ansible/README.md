@@ -21,6 +21,9 @@ python3 nodesuite_cli.py setup
 
 * Modify ```inventories/eos.yml``` with your node's IP address, ssh key, user, and API URL.
 
+* The default target OS configured in the `nodesuite` repository is `ubuntu-18.04_amd64`. You may change that
+  in `group_vars/all` under the `package` parameter.
+
 * Run the Ansible playbooks to install the required dependencies.
 
 ```bash
